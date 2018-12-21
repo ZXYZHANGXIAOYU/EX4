@@ -1,10 +1,11 @@
-import javax.print.attribute.standard.JobOriginatingUserName;
+import DB.VO.City;
+import d.CityBusiness;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.awt.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -41,8 +42,8 @@ public class MyServlet extends HttpServlet {
         List<City> citys = new ArrayList<City>();
         Connectmysql c = new Connectmysql();
         try {
-            c.insert(city);
-            citys = c.search();
+            c.insert(City);
+            City = c.search();
 
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -50,7 +51,16 @@ public class MyServlet extends HttpServlet {
             e.printStackTrace();
         }
 
+        List<City> city = CityBusiness.Business(request);
+
         PrintWriter out = response.getWriter();
+        out.println("<html><body>");
+        for(City  c :City)
+            out.println("<H2>"+c.toString()+"</H2>");
+        out.println("</body></html>");
+        out.close();
+
+        out = response.getWriter();
         out.println("<html><body>");
         out.println("<H1> Hello World!+</H1><br>");
         out.println("姓:"+(姓!=null?姓:"") + "<br>");
